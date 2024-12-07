@@ -1,149 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coming Soon</title>
-    <style>
-        /* Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>S4Mod</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
 
-        body {
-            background: #000;
-            color: #fff;
-            font-family: 'Arial', sans-serif;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
+    .container {
+      text-align: center;
+      max-width: 600px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
 
-        .container {
-            text-align: center;
-            animation: fadeIn 2s ease-in-out;
-        }
+    button {
+      background: #ff7eb3;
+      border: none;
+      border-radius: 50px;
+      padding: 15px 30px;
+      color: #fff;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
 
-        h1 {
-            font-size: 4rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            letter-spacing: 4px;
-            background: linear-gradient(90deg, #ff6b6b, #f94d9b, #8357ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: gradientSlide 5s infinite;
-        }
+    button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 5px 15px rgba(255, 126, 179, 0.5);
+    }
 
-        p {
-            font-size: 1.5rem;
-            margin-bottom: 40px;
-            color: #bbbbbb;
-        }
+    #circleContainer {
+      margin-top: 20px;
+      position: relative;
+      height: 400px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.1);
+    }
 
-        .countdown {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            font-size: 2rem;
-            font-weight: bold;
-        }
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.6);
+      animation: fadeOut 3s forwards;
+    }
 
-        .countdown div {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .countdown span {
-            font-size: 3rem;
-            background: linear-gradient(90deg, #8357ff, #f94d9b, #ff6b6b);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: gradientSlide 5s infinite;
-        }
-
-        .countdown label {
-            font-size: 0.9rem;
-            color: #777777;
-            margin-top: 5px;
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes gradientSlide {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-    </style>
+    @keyframes fadeOut {
+      0% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(2);
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Coming Soon</h1>
-        <p>Something amazing is on the way. Stay tuned!</p>
-        <div class="countdown" id="countdown">
-            <div>
-                <span id="days">00</span>
-                <label>Days</label>
-            </div>
-            <div>
-                <span id="hours">00</span>
-                <label>Hours</label>
-            </div>
-            <div>
-                <span id="minutes">00</span>
-                <label>Minutes</label>
-            </div>
-            <div>
-                <span id="seconds">00</span>
-                <label>Seconds</label>
-            </div>
-        </div>
-    </div>
+  <div class="container">
+    <h1>Welcome to S4Mod</h1>
+    <p>This is the S4Mod. Press the button below and enjoy random circles!</p>
+    <button id="circleButton">Make Circles</button>
+    <div id="circleContainer"></div>
+  </div>
+  <script>
+    document.getElementById('circleButton').addEventListener('click', () => {
+      const container = document.getElementById('circleContainer');
 
-    <script>
-        // Countdown Timer
-        const targetDate = new Date("2024-12-31T23:59:59").getTime();
+      // Create a new circle
+      const circle = document.createElement('div');
+      circle.classList.add('circle');
 
-        const countdownTimer = setInterval(() => {
-            const now = new Date().getTime();
-            const distance = targetDate - now;
+      // Set random size, position, and animation duration
+      const size = Math.random() * 50 + 20;
+      circle.style.width = `${size}px`;
+      circle.style.height = `${size}px`;
+      circle.style.left = `${Math.random() * (container.offsetWidth - size)}px`;
+      circle.style.top = `${Math.random() * (container.offsetHeight - size)}px`;
 
-            if (distance < 0) {
-                clearInterval(countdownTimer);
-                document.getElementById("countdown").innerHTML = "We're Live!";
-                return;
-            }
+      // Add the circle to the container
+      container.appendChild(circle);
 
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            document.getElementById("days").textContent = days.toString().padStart(2, "0");
-            document.getElementById("hours").textContent = hours.toString().padStart(2, "0");
-            document.getElementById("minutes").textContent = minutes.toString().padStart(2, "0");
-            document.getElementById("seconds").textContent = seconds.toString().padStart(2, "0");
-        }, 1000);
-    </script>
+      // Remove the circle after the animation
+      setTimeout(() => {
+        circle.remove();
+      }, 3000);
+    });
+  </script>
 </body>
 </html>
